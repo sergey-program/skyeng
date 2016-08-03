@@ -13,8 +13,8 @@ class m160803_154010_base extends Migration {
 
 		$this->createTable('client', [
 			'id' => 'pk',
-			'name' => Schema::TYPE_STRING . ' NULL',
 			'inviterID' => Schema::TYPE_INTEGER . ' NOT NULL',
+			'name' => Schema::TYPE_STRING . ' NULL',
 			'surname' => Schema::TYPE_STRING . ' NULL',
 			'status' => Schema::TYPE_INTEGER . ' NULL',
 			'timeCreate' => Schema::TYPE_BIGINT . ' NULL'
