@@ -7,29 +7,28 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
-        'db' => require(__DIR__ . '/db.php'),
+        'db' => require(__DIR__ . '/_db.php'),
         'request' => ['cookieValidationKey' => 'ax80F6UYrCD7NlHMTI8s0lxxavxRf4so'],
         'cache' => ['class' => 'yii\caching\FileCache'],
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
-        'errorHandler' => ['errorAction' => 'site/error'],
+        'errorHandler' => ['errorAction' => 'error/error'],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 ['class' => 'yii\log\FileTarget', 'levels' => ['error', 'warning']]
             ]
         ],
-
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ],
-        ],
-        */
+                '/' => 'index/index',
+                '<controller>/<action>' => '<controller>/<action>'
+            ]
+        ]
     ],
     'params' => $params,
 ];
