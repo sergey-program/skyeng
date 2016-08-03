@@ -39,8 +39,8 @@ class Client extends ActiveRecord
     public function rules()
     {
         return [
-            ['email', 'required'],
-            ['email', 'email']
+            [['name', 'inviterID', 'status',], 'required'],
+            [['surname', 'timeCreate'], 'safe']
         ];
     }
 
