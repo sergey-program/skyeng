@@ -40,7 +40,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/index/index']],
-            ['label' => 'Clients', 'url' => ['/client/list']]
+            ['label' => 'Clients', 'url' => ['/client/list']],
+            ['label' => 'Chart', 'url' => ['/chart/index']]
         ]
     ]);
     ?>
