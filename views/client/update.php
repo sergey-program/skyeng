@@ -15,7 +15,7 @@ use yii\helpers\Html;
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Create new client</h3>
+                <h3 class="panel-title">Update</h3>
             </div>
 
             <?php $form = ActiveForm::begin(); ?>
@@ -25,7 +25,7 @@ use yii\helpers\Html;
             </div>
 
             <div class="panel-footer text-center">
-                <?= Html::submitButton('Create', ['class' => 'btn btn-success']); ?>
+                <?= Html::submitButton('Apply', ['class' => 'btn btn-primary']); ?>
                 <?= Html::a('Back', ['list'], ['class' => 'btn btn-info']); ?>
             </div>
 

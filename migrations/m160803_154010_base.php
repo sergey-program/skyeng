@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\db\Migration;
 use yii\db\mysql\Schema;
 
@@ -10,6 +11,11 @@ class m160803_154010_base extends Migration {
 			'id' => 'pk',
 			'email' => Schema::TYPE_STRING . ' NULL',
 		]);
+
+		// create base admin user
+		$user = new User();
+		$user->email = 'admin@email.com';
+		$user->save();
 
 		$this->createTable('client', [
 			'id' => 'pk',

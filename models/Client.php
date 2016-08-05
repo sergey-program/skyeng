@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property int    $timeCreate
  *
  * @property User   $inviter
+ * @property string $statusAsString
  */
 class Client extends ActiveRecord
 {
@@ -53,7 +54,8 @@ class Client extends ActiveRecord
             'name' => 'Имя',
             'inviterID' => 'Приглашающий',
             'surname' => 'Фамилия',
-            'status' => 'Имя',
+            'status' => 'Статус',
+            'statusAsString' => 'Статус',
             'timeCreate' => 'Имя',
         ];
     }
@@ -70,4 +72,21 @@ class Client extends ActiveRecord
 
     ### functions
 
+    /**
+     * @return string
+     */
+    public function getStatusAsString()
+    {
+        switch ($this->status) {
+            case self::STATUS_REGISTERED:
+                return 'Зарегистрированный';
+            case self::STATUS_REFUSED:
+                return 'Отказался';
+            case self::STATUS_NOT_AVAILABLE:
+                return 'Недоступен';
+            case self::STATUS_NEW:
+            default:
+                return 'Новый';
+        }
+    }
 }

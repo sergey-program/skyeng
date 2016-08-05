@@ -11,5 +11,34 @@ use yii\web\Controller;
  */
 abstract class AbstractController extends Controller
 {
+    /**
+     * @return bool
+     */
+    public function isPost()
+    {
+        return \Yii::$app->request->isPost;
+    }
+
+    /**
+     * @param string|null $name
+     * @param mixed|null  $defaultValue
+     *
+     * @return array|mixed
+     */
+    public function post($name = null, $defaultValue = null)
+    {
+        return \Yii::$app->request->post($name, $defaultValue);
+    }
+
+    /**
+     * @param string|null $name
+     * @param mixed|null  $defaultValue
+     *
+     * @return array|mixed
+     */
+    public function get($name = null, $defaultValue = null)
+    {
+        return \Yii::$app->request->get($name, $defaultValue);
+    }
 
 }
