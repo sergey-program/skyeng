@@ -49,11 +49,11 @@
 1. Есть таблица платежей пользователей:
 
 CREATE TABLE payments (
-`id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-`student_id` INT NOT NULL,
-`datetime` DATETIME NOT NULL,
-`amount` FLOAT DEFAULT 0,
-INDEX `student_id` (`student_id`)
+ id  INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ student_id  INT NOT NULL,
+ datetime  DATETIME NOT NULL,
+ amount  FLOAT DEFAULT 0,
+INDEX  student_id  ( student_id )
 );
 
 Необходимо составить запрос, который находит пользователя, чья сумма платежей находится на втором месте после максимальной.
@@ -62,22 +62,22 @@ INDEX `student_id` (`student_id`)
 2. Есть две таблицы. Первая содержит основные данные по студентам:
 
 CREATE TABLE student (
-`id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-`name` VARCHAR(20) NOT NULL,
-`surname` VARCHAR(20) DEFAULT '' NOT NULL,
-`gender` ENUM('male', 'female', 'unknown') DEFAULT 'unknown',
-INDEX `gender` (`gender`)
+ id  INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ name  VARCHAR(20) NOT NULL,
+ surname  VARCHAR(20) DEFAULT '' NOT NULL,
+ gender  ENUM('male', 'female', 'unknown') DEFAULT 'unknown',
+INDEX  gender  ( gender )
 );
 
 Вторая содержит историю статусов студентов, где последний по хронологии статус является текущим:
 
 CREATE TABLE student_status (
-`id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-`student_id` INT NOT NULL,
-`status` ENUM('new', 'studying', 'vacation', 'testing', 'lost') DEFAULT 'new' NOT NULL,
-`datetime` DATETIME NOT NULL,
-INDEX `student_id` (`student_id`),
-INDEX `datetime` (`datetime`)
+ id  INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ student_id  INT NOT NULL,
+ status  ENUM('new', 'studying', 'vacation', 'testing', 'lost') DEFAULT 'new' NOT NULL,
+ datetime  DATETIME NOT NULL,
+INDEX  student_id  ( student_id ),
+INDEX  datetime  ( datetime )
 );
 
 
@@ -94,14 +94,14 @@ INDEX `datetime` (`datetime`)
 
 Необходимо описать в понятной форме наиболее оптимальный алгоритм создания нового файла, в котором записи из первого файла будут отсортированы по поряду возрастания ID, а для одинаковых ID по хронологии. (Можно написать небольшую программу на PHP, но не обязательно)
 
-    Например, если в исходном файле:
-    1234567890 2013-03-08 12:26:09
-    0987654321 2013-03-09 09:23:17
-    1234567890 2014-01-01 00:00:34
-    0087645544 2015-02-03 17:45:01
+Например, если в исходном файле:
+1234567890 2013-03-08 12:26:09
+0987654321 2013-03-09 09:23:17
+1234567890 2014-01-01 00:00:34
+0087645544 2015-02-03 17:45:01
 0087645544 2015-01-03 11:05:06
 
-    В результирующем должно быть:
+В результирующем должно быть:
 0087645544 2015-01-03 11:05:06
 0087645544 2015-01-03 17:45:01
 0987654321 2013-03-09 09:23:17
