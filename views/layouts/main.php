@@ -42,7 +42,9 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/index/index']],
             ['label' => 'Clients', 'url' => ['/client/list']],
             ['label' => 'Chart', 'url' => ['/chart/index']],
-            ['label' => 'First test query', 'url' => ['/index/second-entry']],
+            ['label' => 'First', 'url' => ['/index/second-entry']],
+            ['label' => 'Second', 'url' => ['/index/join-entry']],
+            ['label' => 'Third', 'url' => ['/index/less-entry']],
         ]
     ]);
     ?>

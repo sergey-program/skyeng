@@ -51,4 +51,21 @@ class IndexController extends AbstractController
             'rows' => $rows
         ]);
     }
+
+    public function actionLessEntry()
+    {
+        $sql = 'SELECT
+                id,
+                name,
+                surname,
+                (SELECT COUNT(id) FROM payment WHERE student_id = student.id AND amount > 0) as payment_count,
+                (SELECT status FROM student_status WHERE student_id = student.id ORDER BY datetime DESC LIMIT 0,1) as latest_status
+
+                FROM student
+                HAVING payment_count < 4 AND latest_status = "' . StudentStatus::STATUS_LOST . '"';
+
+        $rows = \Yii::$app->db->createCommand($sql)->queryAll();
+
+        return $this->render('less-entry', ['sql' => $sql, 'rows' => $rows]);
+    }
 }
