@@ -24,7 +24,7 @@ class IndexController extends AbstractController
      */
     public function actionSecondEntry()
     {
-        $sqlAll = 'SELECT *, SUM(amount) as amount_sum FROM payment GROUP BY student_id ORDER BY student_id';
+        $sqlAll = 'SELECT *, SUM(amount) as amount_sum FROM payment GROUP BY student_id ORDER BY amount_sum DESC';
         $rowsAll = \Yii::$app->db->createCommand($sqlAll)->queryAll();
 
         $sqlOne = $sqlAll . ' LIMIT 1,1';
