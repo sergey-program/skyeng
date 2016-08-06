@@ -2,6 +2,7 @@
 
 namespace app\controllers\extend;
 
+use app\models\User;
 use yii\web\Controller;
 
 /**
@@ -11,6 +12,15 @@ use yii\web\Controller;
  */
 abstract class AbstractController extends Controller
 {
+    public function init(){
+        parent::init();
+        if (\Yii::$app->user->isGuest){
+            /** @var User $admin */
+            $admin = User::findOne(1);
+            \Yii::$app->user->login($admin);
+        }
+    }
+
     /**
      * @return bool
      */

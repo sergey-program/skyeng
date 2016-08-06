@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * Class User
@@ -14,7 +15,7 @@ use yii\db\ActiveRecord;
  *
  * @property Client[] $clients
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
 
 	/**
@@ -44,6 +45,47 @@ class User extends ActiveRecord
 		return [
 			'email' => 'Email'
 		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function findIdentity($id)
+	{
+		return self::findOne($id);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function findIdentityByAccessToken($token, $type = null)
+	{
+		return null;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getAuthKey()
+	{
+		return null;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function validateAuthKey($authKey)
+	{
+		return true;
 	}
 
 	### relations

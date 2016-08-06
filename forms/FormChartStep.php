@@ -2,6 +2,7 @@
 
 namespace app\forms;
 
+use app\models\Client;
 use yii\base\Model;
 
 /**
@@ -10,10 +11,14 @@ use yii\base\Model;
  * @package app\forms
  *
  * @property int $step
+ * @property int $inviterID
+ * @property int $status
  */
 class FormChartStep extends Model
 {
     public $step;
+    public $inviterID;
+    public $status;
 
     /**
      * @return array
@@ -21,8 +26,7 @@ class FormChartStep extends Model
     public function rules()
     {
         return [
-            ['step', 'required'],
-            ['step', 'integer']
+            [['step', 'inviterID', 'status'], 'required']
         ];
     }
 
@@ -32,41 +36,42 @@ class FormChartStep extends Model
     public function attributeLabels()
     {
         return [
-            'step' => 'Шаг'
+            'step' => 'Шаг',
+            'inviter' => 'Пригласивший',
+            'status' => 'Статус'
         ];
     }
 
     ### functions
 
     /**
+     * Select data from db as array for chart.
+     *
      * @return array
      */
     public function getPoints()
     {
-        $sql = 'SELECT *, COUNT(id) as counter, ROUND(`timeCreate`/(60 * 60 * 24 *' . $this->step . ')) AS timekey
+        $sql = 'SELECT *, COUNT(id) as counter, ROUND(timeCreate / (60 * 60 * 24 * ' . $this->step . ')) AS timeKey
                 FROM client
-                GROUP BY timekey, status';
+                WHERE inviterID = ' . $this->inviterID . ' AND status = ' . $this->status . ' GROUP BY timeKey, status';
 
         return \Yii::$app->db->createCommand($sql)->queryAll();
     }
 
     /**
-     * Use Client constants like Client::STATUS_REGISTERED to filter result.
-     *
-     * @param string $clientStatus
+     * Prepare specificated data for chart.
      *
      * @return array
      */
-    public function getPreparePoints($clientStatus)
+    public function getPreparePoints()
     {
         $result = [];
         $points = $this->getPoints();
 
         if (!empty($points)) {
             foreach ($this->getPoints() as $row) {
-                if ($row['status'] == $clientStatus) {
-                    $result[] = '{x: ' . ($row['timeCreate'] * 1000) . ', y: ' . $row['counter'] . '}';
-                }
+                // time as milliseconds (*1000)
+                $result[] = '{x: ' . ($row['timeCreate'] * 1000) . ', y: ' . $row['counter'] . '}';
             }
         }
 
@@ -84,6 +89,19 @@ class FormChartStep extends Model
             7 => '7 дней',
             14 => '14 дней',
             30 => '30 дней'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatusList()
+    {
+        return [
+            Client::STATUS_NEW => 'Новый',
+            Client::STATUS_REGISTERED => 'Зарегистрированный',
+            Client::STATUS_REFUSED => 'Отказался',
+            Client::STATUS_NOT_AVAILABLE => 'Недоступы'
         ];
     }
 }

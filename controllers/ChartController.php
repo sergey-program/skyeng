@@ -18,6 +18,7 @@ class ChartController extends AbstractController
     public function actionIndex()
     {
         $formChartStep = new FormChartStep();
+        $formChartStep->inviterID = \Yii::$app->user->id;
 
         if ($this->isPost()){
             $formChartStep->load($this->post());

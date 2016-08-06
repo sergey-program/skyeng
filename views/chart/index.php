@@ -1,10 +1,8 @@
 <?php
 
 use app\forms\FormChartStep;
-use app\models\Client;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use yii\widgets\Pjax;
 
 /**
  * @var \yii\web\View            $this
@@ -13,16 +11,17 @@ use yii\widgets\Pjax;
  */
 
 ?>
+<script type="text/javascript">
+    var dataPointArray = []; // default
 
-<?php if (\Yii::$app->request->isPost): ?>
-    <script type="text/javascript">
-        var dataPointArray = [<?= implode(',', $formChartStep->getPreparePoints(Client::STATUS_REGISTERED));?>];
-    </script>
-<?php endif; ?>
+    <?php if (\Yii::$app->request->isPost): ?>
+        dataPointArray = [<?= implode(',', $formChartStep->getPreparePoints());?>];
+    <?php endif; ?>
+</script>
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <?php $form = ActiveForm::begin(['options' => ['data-pjax' => '1']]); ?>
+        <?php $form = ActiveForm::begin(); ?>
 
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -31,6 +30,7 @@ use yii\widgets\Pjax;
 
             <div class="panel-body">
                 <?= $form->field($formChartStep, 'step')->dropDownList(FormChartStep::getStepList(), ['prompt' => 'Select step...']); ?>
+                <?= $form->field($formChartStep, 'status')->dropDownList(FormChartStep::getStatusList(), ['prompt' => 'Select step...']); ?>
             </div>
 
             <div class="panel-footer text-center">
@@ -42,17 +42,15 @@ use yii\widgets\Pjax;
     </div>
 </div>
 
-<?php if (\Yii::$app->request->isPost): ?>
-    <div class="row">
-        <div class="col-md-12">
+<div class="row">
+    <div class="col-md-12">
 
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                    <p class="text-muted">Используйте <i>CTRL + LCM</i> (левая кнопки мыши) для увеличения граффика в заданном диапазоне.</p>
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                <p class="text-muted">Используйте <i>CTRL + LCM</i> (левая кнопки мыши) для увеличения граффика в заданном диапазоне.</p>
             </div>
-
         </div>
+
     </div>
-<?php endif; ?>
+</div>
