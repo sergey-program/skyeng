@@ -41,9 +41,18 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function actionJoinEntry()
     {
-        $sql = 'SELECT student.id, student.gender, student_status.status FROM student LEFT JOIN student_status ON student.id = student_status.student_id WHERE student.gender = "' . Student::GENDER_UNKNOWN . '" AND student_status.status = "' . StudentStatus::STATUS_VACATION . '"';
+        $sql = 'SELECT
+                  student.id,
+                  student.gender,
+                  student_status.status
+                FROM student
+                LEFT JOIN student_status ON student.id = student_status.student_id
+                WHERE student.gender = "' . Student::GENDER_UNKNOWN . '" AND student_status.status = "' . StudentStatus::STATUS_VACATION . '"';
         $rows = \Yii::$app->db->createCommand($sql)->queryAll();
 
         return $this->render('join-entry', [
@@ -52,14 +61,17 @@ class IndexController extends AbstractController
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function actionLessEntry()
     {
         $sql = 'SELECT
-                id,
-                name,
-                surname,
-                (SELECT COUNT(id) FROM payment WHERE student_id = student.id AND amount > 0) as payment_count,
-                (SELECT status FROM student_status WHERE student_id = student.id ORDER BY datetime DESC LIMIT 0,1) as latest_status
+                    id,
+                    name,
+                    surname,
+                    (SELECT COUNT(id) FROM payment WHERE student_id = student.id AND amount > 0) as payment_count,
+                    (SELECT status FROM student_status WHERE student_id = student.id ORDER BY datetime DESC LIMIT 0,1) as latest_status
 
                 FROM student
                 HAVING payment_count < 4 AND latest_status = "' . StudentStatus::STATUS_LOST . '"';

@@ -15,7 +15,8 @@
             <div class="panel-body">
 
                 <?php if (empty($rows)): ?>
-                    <p class="alert alert-danger">Empty result...</p>
+                    <p class="alert alert-danger text-center">Empty result...</p>
+                    <p class="text-muted text-center">Измените данные в бд под указанную задачу.</p>
                 <?php else: ?>
 
                     <h3>Select second entry</h3>

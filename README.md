@@ -1,102 +1,87 @@
-Yii 2 Basic Project Template
-============================
+Тестовое задание для разработчика
+Комплексная задача
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
+Для учета потенциальных клиентов необходимо создать таблицу в базе данных, в которой будут храниться:
+имя и фамилия клиента;
+номер телефона клиента;
+текущий статус клиента (новый, зарегистрирован, отказался, недоступен);
+время, когда мы получили этого клиента.
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+Первая страница: пользователь добавляет новых клиентов в эту таблицу и затем в любое время может менять им статусы.
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-basic/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-basic/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-basic.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-basic)
+Вторая страница: отчет по результатам работы с клиентами, который демонстрирует конверсию по периодам, начиная от даты получения первого клиента. Конверсия, в данном случае, это процент зарегистрированных клиентов от общего числа всех клиентов. Количество дней в каждом периоде должно определяться пользователем. Привествуется вывод отчета в виде графика, где X - это номер периода, Y - это конверсия.
 
-DIRECTORY STRUCTURE
--------------------
+Дополнительно (но не обязательно): добавить на страницу отчета чекбокс, который включает предсказание конверсии. 
 
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
+Предсказание работает следующим образом: Сначала высчитывается отношение зарегистированых пользователей к потерянным за выбранный период, а затем делается предположение, что пользователи в статусе “новый” и “недоступен” (все еще неопределившиеся) получат такое же распределение, как и определившиеся пользователи для этого периода. Далее вычисляется конверсия так, как будто все пользователи уже определились.
 
+Требования:
+— можно использовать любой фреймворк, но не обязательно
+— итоговое приложение должно уметь запускаться на встроенном в php сервере
+— проект должен работать на  php 5.4+, mysql 5.6+.
 
+Выложите схему базы в виде sql-файла на github.com вместе с приложением.
 
-REQUIREMENTS
-------------
+Вопросы по MySQL
 
-The minimum requirement by this project template that your Web server supports PHP 5.4.0.
+1. Есть таблица платежей пользователей:
 
+CREATE TABLE payments (
+`id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+`student_id` INT NOT NULL,
+`datetime` DATETIME NOT NULL,
+`amount` FLOAT DEFAULT 0,
+INDEX `student_id` (`student_id`)
+);
 
-INSTALLATION
-------------
-
-### Install from an Archive File
-
-Extract the archive file downloaded from [yiiframework.com](http://www.yiiframework.com/download/) to
-a directory named `basic` that is directly under the Web root.
-
-Set cookie validation key in `config/web.php` file to some random secret string:
-
-```php
-'request' => [
-    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '<secret random string goes here>',
-],
-```
-
-You can then access the application through the following URL:
-
-~~~
-http://localhost/basic/web/
-~~~
+Необходимо составить запрос, который находит пользователя, чья сумма платежей находится на втором месте после максимальной.
 
 
-### Install via Composer
+2. Есть две таблицы. Первая содержит основные данные по студентам:
 
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
+CREATE TABLE student (
+`id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+`name` VARCHAR(20) NOT NULL,
+`surname` VARCHAR(20) DEFAULT '' NOT NULL,
+`gender` ENUM('male', 'female', 'unknown') DEFAULT 'unknown',
+INDEX `gender` (`gender`)
+);
 
-You can then install this project template using the following command:
+Вторая содержит историю статусов студентов, где последний по хронологии статус является текущим:
 
-~~~
-php composer.phar global require "fxp/composer-asset-plugin:~1.1.1"
-php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
-~~~
-
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
-
-~~~
-http://localhost/basic/web/
-~~~
+CREATE TABLE student_status (
+`id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+`student_id` INT NOT NULL,
+`status` ENUM('new', 'studying', 'vacation', 'testing', 'lost') DEFAULT 'new' NOT NULL,
+`datetime` DATETIME NOT NULL,
+INDEX `student_id` (`student_id`),
+INDEX `datetime` (`datetime`)
+);
 
 
-CONFIGURATION
--------------
+Необходимо показать имена и фамилии всех студентов, чей пол до сих не известен (gender = 'unknown') и они сейчас находятся на каникулах (status = ‘vacation’).
 
-### Database
 
-Edit the file `config/db.php` with real data, for example:
 
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
-```
+3. Используя три предыдущие таблицы, найти имена и фамилии всех студентов, которые заплатили не больше трех раз и перестали учиться (status = ‘lost’). Нулевые платежи (amount = 0) не учитывать.
 
-**NOTES:**
-- Yii won't create the database for you, this has to be done manually before you can access it.
-- Check and edit the other files in the `config/` directory to customize your application as required.
-- Refer to the README in the `tests` directory for information specific to basic application tests.
+
+И еще одна задача
+
+В одном файле хранятся ID пользователей и время их заходов на сайт за 5 лет существования сайта в произвольном порядке. Известно, что существует порядка миллиона пользователей, четверть из которых были активными. Активные пользователи в среднем по 100 раз в день заходили на какую-либо страницу сайта.
+
+Необходимо описать в понятной форме наиболее оптимальный алгоритм создания нового файла, в котором записи из первого файла будут отсортированы по поряду возрастания ID, а для одинаковых ID по хронологии. (Можно написать небольшую программу на PHP, но не обязательно)
+
+    Например, если в исходном файле:
+    1234567890 2013-03-08 12:26:09
+    0987654321 2013-03-09 09:23:17
+    1234567890 2014-01-01 00:00:34
+    0087645544 2015-02-03 17:45:01
+0087645544 2015-01-03 11:05:06
+
+    В результирующем должно быть:
+0087645544 2015-01-03 11:05:06
+0087645544 2015-01-03 17:45:01
+0987654321 2013-03-09 09:23:17
+1234567890 2013-03-08 12:26:09
+1234567890 2014-01-01 00:00:34
