@@ -20,7 +20,7 @@
                     <p class="text-muted"><strong>SQL query</strong>:<br/><i><?= $sql; ?></i></p>
                     <table class="table table-bordered">
                         <tr>
-                            <th>ID</th>
+                            <th>Student ID</th>
                             <th>Gender</th>
                             <th>Status</th>
                         </tr>
