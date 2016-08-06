@@ -79,11 +79,11 @@ class FormChartStep extends Model
     public static function getStepList()
     {
         return [
-            1 => '1 day',
-            3 => '3 days',
-            7 => '7 days',
-            14 => '14 days',
-            30 => '30 days'
+            1 => '1 день',
+            3 => '3 дня',
+            7 => '7 дней',
+            14 => '14 дней',
+            30 => '30 дней'
         ];
     }
 }

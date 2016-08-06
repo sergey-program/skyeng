@@ -34,7 +34,7 @@ use yii\widgets\Pjax;
             </div>
 
             <div class="panel-footer text-center">
-                <?= Html::submitButton('Apply', ['class' => 'btn btn-success']); ?>
+                <?= Html::submitButton('Показать', ['class' => 'btn btn-success']); ?>
             </div>
         </div>
 
