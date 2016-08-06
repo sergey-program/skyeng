@@ -7,7 +7,7 @@ class m160806_162034_payments extends Migration
 {
     public function safeUp()
     {
-        $this->createTable('payments', [
+        $this->createTable('payment', [
                 'id' => 'pk',
                 'student_id' => Schema::TYPE_INTEGER . ' NOT NULL',
                 'datetime' => Schema::TYPE_DATETIME . ' NOT NULL',

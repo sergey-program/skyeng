@@ -16,6 +16,12 @@ use yii\db\ActiveRecord;
  */
 class StudentStatus extends ActiveRecord
 {
+    const STATUS_NEW = 'new';
+    const STATUS_STUDY = 'studying';
+    const STATUS_VACATION = 'vacation';
+    const STATUS_TEST = 'testing';
+    const STATUS_LOST = 'lost';
+
     /**
      * @return string
      */

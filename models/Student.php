@@ -16,6 +16,10 @@ use yii\db\ActiveRecord;
  */
 class Student extends ActiveRecord
 {
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
+    const GENDER_UNKNOWN = 'unknown';
+
     /**
      * @return string
      */
@@ -30,7 +34,7 @@ class Student extends ActiveRecord
     public function rules()
     {
         return [
-            ['name', 'required'] .
+            ['name', 'required'],
             [['surname', 'gender'], 'safe']
         ];
     }

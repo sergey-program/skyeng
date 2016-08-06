@@ -5,7 +5,7 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * Class Payments
+ * Class Payment
  *
  * @package app\models
  *
@@ -14,14 +14,14 @@ use yii\db\ActiveRecord;
  * @property string $datetime
  * @property float  $amount
  */
-class Payments extends ActiveRecord
+class Payment extends ActiveRecord
 {
     /**
      * @return string
      */
     public static function tableName()
     {
-        return 'payments';
+        return 'payment';
     }
 
     /**

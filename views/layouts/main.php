@@ -41,7 +41,8 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/index/index']],
             ['label' => 'Clients', 'url' => ['/client/list']],
-            ['label' => 'Chart', 'url' => ['/chart/index']]
+            ['label' => 'Chart', 'url' => ['/chart/index']],
+            ['label' => 'First test query', 'url' => ['/index/second-entry']],
         ]
     ]);
     ?>
