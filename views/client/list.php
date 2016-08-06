@@ -1,6 +1,5 @@
 <?php
 
-use app\models\Client;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -13,7 +12,7 @@ use yii\helpers\Url;
 ?>
 
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="pull-right">
@@ -31,10 +30,9 @@ use yii\helpers\Url;
                         'name',
                         'surname',
                         'statusAsString',
-                        'inviter.email',
-                        [
-                            'class' => ActionColumn::className()
-                        ]
+                        ['label' => 'Inviter', 'attribute' => 'inviter.email'],
+                        'phone',
+                        ['class' => ActionColumn::className(), 'template' => '{update} {delete}']
                     ]
                 ]); ?>
             </div>

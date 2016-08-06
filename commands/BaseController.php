@@ -31,6 +31,7 @@ class BaseController extends Controller
             $client->inviterID = 1;
             $client->timeCreate = time() + ((60 * 60 * 4) * $i); //
             $client->status = $statuses[mt_rand(0, 3)];
+            $client->phone = mt_rand(100000000, 999999999);
             $client->save();
         }
 

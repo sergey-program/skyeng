@@ -12,6 +12,7 @@ use app\models\Client;
 
 <?= $form->field($client, 'name'); ?>
 <?= $form->field($client, 'surname'); ?>
+<?= $form->field($client, 'phone'); ?>
 <?= $form->field($client, 'status')->dropDownList([
     Client::STATUS_NEW => 'new',
     Client::STATUS_NOT_AVAILABLE => 'not available',

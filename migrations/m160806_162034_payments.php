@@ -20,7 +20,7 @@ class m160806_162034_payments extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('payments');
+        $this->dropTable('payment');
 
         return true;
     }

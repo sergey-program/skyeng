@@ -9,15 +9,16 @@ use yii\db\ActiveRecord;
  *
  * @package app\models
  *
- * @property int    $id
- * @property string $name
- * @property int    $inviterID
- * @property string $surname
- * @property int    $status
- * @property int    $timeCreate
+ * @property int        $id
+ * @property string     $name
+ * @property int        $inviterID
+ * @property string     $surname
+ * @property int        $status
+ * @property int        $timeCreate
+ * @property int|string $phone
  *
- * @property User   $inviter
- * @property string $statusAsString
+ * @property User       $inviter
+ * @property string     $statusAsString
  */
 class Client extends ActiveRecord
 {
@@ -41,7 +42,7 @@ class Client extends ActiveRecord
     {
         return [
             [['name', 'inviterID', 'status',], 'required'],
-            [['surname', 'timeCreate'], 'safe']
+            [['surname', 'phone', 'timeCreate'], 'safe']
         ];
     }
 
@@ -56,7 +57,8 @@ class Client extends ActiveRecord
             'surname' => 'Фамилия',
             'status' => 'Статус',
             'statusAsString' => 'Статус',
-            'timeCreate' => 'Имя',
+            'timeCreate' => 'Дата подключения',
+            'phone' => 'Телефон'
         ];
     }
 
