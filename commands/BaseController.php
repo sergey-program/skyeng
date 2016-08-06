@@ -7,7 +7,6 @@ use app\models\Payment;
 use app\models\Student;
 use app\models\StudentStatus;
 use yii\console\Controller;
-use yii\data\Pagination;
 
 /**
  * Class BaseController

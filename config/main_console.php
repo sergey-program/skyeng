@@ -10,7 +10,12 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
+    'aliases' => [
+        '@web' => dirname(__DIR__) . '/web/',
+        '@webroot' => dirname(__DIR__)
+    ],
     'components' => [
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
