@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace app\assets;
 
@@ -17,13 +12,15 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-    ];
+    public $css = ['css/site.css'];
     public $js = [
+        'http://canvasjs.com/assets/script/jquery.canvasjs.min.js',
+        'js/chart.js'
     ];
+
     public $depends = [
+        'yii\web\JqueryAsset',
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapAsset'
     ];
 }
